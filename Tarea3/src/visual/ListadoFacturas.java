@@ -17,6 +17,7 @@ import logico.Administracion;
 import logico.Cliente;
 import logico.Factura;
 import logico.Utilidades;
+import servidor.FormatoFactura;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -31,6 +32,7 @@ public class ListadoFacturas extends JDialog {
 	private Factura selected=null;
 	private JButton btnDetalles;
 	private Cliente auxCliente=null;
+	private FormatoFactura formato = new FormatoFactura();
 	/**
 	 * Launch the application.
 	 */
@@ -74,6 +76,7 @@ public class ListadoFacturas extends JDialog {
 						if(index>=0) {
 							String codigo = table.getValueAt(index, 0).toString();
 							selected=Administracion.getInstance().buscarFacturaByCode(codigo);
+							formato.creandoStringFactura(selected);
 							btnDetalles.setEnabled(true);
 						}
 					}

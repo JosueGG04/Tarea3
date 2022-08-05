@@ -13,7 +13,7 @@ public abstract class Queso implements Serializable{
 	protected boolean disponible; 
 	protected double pi=Math.PI;
 	
-	protected abstract float volumen();
+	public abstract float volumen();
 
 	public Queso(String codigo, float precioBase, float precioUnitario) {
 		super();
@@ -56,6 +56,5 @@ public abstract class Queso implements Serializable{
 	public float precio() {
 		float precioReal=precioBase+(precioUnitario*volumen());
 		return precioReal;
-	}
-	
+	}	
 }
