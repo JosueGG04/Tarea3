@@ -21,7 +21,6 @@ public class Administracion implements Serializable{
 	public static int generadorCodeEsfera=1;
 	public static int generadorCodeHueco=1;
 	
-	
 	private Administracion() {
 		super();
 		this.todasLasFacturas = new ArrayList<Factura>();
