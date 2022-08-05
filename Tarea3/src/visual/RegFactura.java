@@ -287,11 +287,13 @@ public class RegFactura extends JDialog {
 								Factura auxFactura = new Factura(txtCodigo.getText(), ftxtCedula.getText());
 								Administracion.getInstance().insertarQuesosEnFactura(auxFactura, quesosEnCarrito);
 								Administracion.getInstance().insertarFactura(auxFactura, auxCliente);
+								FormatoFactura.crearArchivo(auxFactura);
 								JOptionPane.showMessageDialog(null,"La factura a sido registrada de manera exitosa" , "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
 								quesosVendidos();
 								buscado=false;
 								loadEverything();
 								clean();
+								
 							}
 							else {
 								JOptionPane.showMessageDialog(null, "No se puede crear una factura sin cliente!", "ERROR", 0);
@@ -301,6 +303,7 @@ public class RegFactura extends JDialog {
 							JOptionPane.showMessageDialog(null, "No se puede crear una factura sin quesos!", "ERROR", 0);
 						}
 					}
+					
 				});
 				btnConfirmar.setActionCommand("OK");
 				buttonPane.add(btnConfirmar);

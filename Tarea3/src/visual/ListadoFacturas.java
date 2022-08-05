@@ -76,7 +76,6 @@ public class ListadoFacturas extends JDialog {
 						if(index>=0) {
 							String codigo = table.getValueAt(index, 0).toString();
 							selected=Administracion.getInstance().buscarFacturaByCode(codigo);
-							formato.creandoStringFactura(selected);
 							btnDetalles.setEnabled(true);
 						}
 					}

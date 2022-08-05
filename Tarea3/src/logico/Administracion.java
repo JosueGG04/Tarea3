@@ -1,9 +1,10 @@
 package logico;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
 
 
 public class Administracion implements Serializable{
@@ -20,6 +21,7 @@ public class Administracion implements Serializable{
 	public static int generadorCodeEsfera=1;
 	public static int generadorCodeHueco=1;
 	
+	
 	private Administracion() {
 		super();
 		this.todasLasFacturas = new ArrayList<Factura>();
@@ -33,7 +35,51 @@ public class Administracion implements Serializable{
 		}
 		return admin;
 	}
-
+	//nuevo
+	private void contarFacturas() {
+		int i=0;
+		for (Factura factura : todasLasFacturas) {
+			i++;
+		}
+		generadorCodeFactura=i+1;
+	}
+	private void contarEsferico() {
+		int i=0;
+		for (Queso queso: getTodosLosQuesos()) {
+			if (queso instanceof Esferico) {
+				i++;
+			}
+		}
+		generadorCodeEsfera=i+1;
+	}
+	private void contarCilindro() {
+		int i=0;
+		for (Queso queso: getTodosLosQuesos()) {
+			if (queso instanceof Cilindrico) {
+				if (!(queso instanceof Hueco)) {
+					i++;
+				}
+				
+			}
+		}
+		generadorCodeCilindro=i+1;
+	}
+	private void contarHueco() {
+		int i=0;
+		for (Queso queso: getTodosLosQuesos()) {
+			if (queso instanceof Hueco) {
+				i++;
+			}
+		}
+		generadorCodeHueco=i+1;
+	}
+	public void inicializarCodigos() {
+		contarCilindro();
+		contarEsferico();
+		contarFacturas();
+		contarHueco();
+	}
+	//fin
 	public ArrayList<Cliente> getTodosLosClientes() {
 		return todosLosClientes;
 	}

@@ -1,5 +1,9 @@
 package servidor;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
 import logico.Administracion;
 import logico.Cilindrico;
 import logico.Esferico;
@@ -10,23 +14,38 @@ import logico.Utilidades;
 
 public class FormatoFactura {
 
-	public String creandoStringFactura(Factura factura) {
+	public static String creandoStringFactura(Factura factura) {
 		String aux = "";
-		aux.concat("==========================================================\n");
-		aux.concat("¡Bienvenidos!\n");
-		aux.concat("Fecha: " + Utilidades.formatoFecha.format(factura.getFecha())+"\n");
-		aux.concat("Nombre: "+Administracion.getInstance().buscarClienteByCedula(factura.getCedulaCliente()).getNombre()+"\n");
-		aux.concat("Teléfono: "+Administracion.getInstance().buscarClienteByCedula(factura.getCedulaCliente()).getTelefono()+"\n");
-		aux.concat("==========================================================\n");
-		aux.concat("Quesos:");
+		aux =aux.concat("==========================================================\n");
+		aux =aux.concat("¡Bienvenidos!\n");
+		aux =aux.concat("Fecha: " + Utilidades.formatoFecha.format(factura.getFecha())+"\n");
+		aux =aux.concat("Nombre: "+Administracion.getInstance().buscarClienteByCedula(factura.getCedulaCliente()).getNombre()+"\n");
+		aux =aux.concat("Teléfono: "+Administracion.getInstance().buscarClienteByCedula(factura.getCedulaCliente()).getTelefono()+"\n");
+		aux =aux.concat("==========================================================\n");
+		aux =aux.concat("Quesos:\n");
 		for (Queso queso : factura.getMisQuesos()) {
-			aux.concat(queso.getCodigo()+" Vol "+String.format("%.2f", queso.volumen())+" $"+String.format("%.2f", queso.precio())+"\n");
+			aux =aux.concat(queso.getCodigo()+" Vol "+String.format("%.2f", queso.volumen())+" $"+String.format("%.2f", queso.precio())+"\n");
 		}
-		aux.concat(String.format("$%.2f", factura.MontoFactura())+"\n");
-		aux.concat("==========================================================\n");
-		aux.concat("¡Gracias por preferirnos!");
-		System.out.print(aux);
+		aux =aux.concat(String.format("Total: $%.2f", factura.MontoFactura())+"\n");
+		aux =aux.concat("==========================================================\n");
+		aux =aux.concat("¡Gracias por preferirnos!\n");
 		return aux;
+	}
+	
+	public static void crearArchivo(Factura f) {
+		File archivo = new File (f.getCodigoFactura()+".txt");
+        FileWriter escritor;
+		try {
+			escritor = new FileWriter(archivo);
+			String info = creandoStringFactura(f);
+			// Escribe el archivo con la informacion
+        for (int i=0; i<info.length(); i++)
+            escritor.write(info.charAt(i));
+        escritor.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }
 

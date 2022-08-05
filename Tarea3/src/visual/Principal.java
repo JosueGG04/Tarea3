@@ -48,6 +48,7 @@ public class Principal extends JFrame {
 					queseriaRead = new ObjectInputStream(queseria);
 					Administracion temp = (Administracion)queseriaRead.readObject();
 					Administracion.setAdministracion(temp);
+					Administracion.getInstance().inicializarCodigos();
 					queseria.close();
 					queseriaRead.close();
 				} catch (FileNotFoundException e) {
