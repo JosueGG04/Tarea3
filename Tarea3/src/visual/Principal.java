@@ -7,10 +7,21 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import logico.Administracion;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.awt.event.ActionEvent;
 
 public class Principal extends JFrame {
@@ -24,13 +35,40 @@ public class Principal extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				Principal frame = new Principal();
+				frame.setVisible(true);
+				
+				
+				FileInputStream queseria;
+				FileOutputStream queseria2;
+				ObjectInputStream queseriaRead;
+				ObjectOutputStream queseriaWrite;
 				try {
-					Principal frame = new Principal();
-					frame.setVisible(true);
-				} catch (Exception e) {
+					queseria = new FileInputStream ("queseria.dat");
+					queseriaRead = new ObjectInputStream(queseria);
+					Administracion temp = (Administracion)queseriaRead.readObject();
+					Administracion.setAdministracion(temp);
+					queseria.close();
+					queseriaRead.close();
+				} catch (FileNotFoundException e) {
+					try {
+						queseria2 = new  FileOutputStream("queseria.dat");
+						queseriaWrite = new ObjectOutputStream(queseria2);
+						queseriaWrite.writeObject(Administracion.getInstance());
+						queseria2.close();
+						queseriaWrite.close();
+					} catch (FileNotFoundException e1) {
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+					}
+				} catch (IOException e) {
+					
+					
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-			}
+			};
 		});
 	}
 
@@ -44,6 +82,31 @@ public class Principal extends JFrame {
 		dim = getToolkit().getScreenSize();
 		setSize(dim.width-100, dim.height-35);
 		setLocationRelativeTo(null);
+		
+		//inicio de los cambios para archivos
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				FileOutputStream queseria2;
+				ObjectOutputStream queseriaWrite;
+				try {
+					queseria2 = new  FileOutputStream("queseria.dat");
+					queseriaWrite = new ObjectOutputStream(queseria2);
+					queseriaWrite.writeObject(Administracion.getInstance());
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
+		
+		
+		//fin
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);

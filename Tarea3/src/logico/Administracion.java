@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
 
+
 public class Administracion implements Serializable{
 	/**
 	 * 
@@ -131,4 +132,13 @@ public class Administracion implements Serializable{
 			factura.getMisQuesos().add(queso);
 		}
 	}
+	
+	//cambios tarea 3
+
+	public static void setAdministracion(Administracion administracion) {
+		Administracion.admin = administracion;
+	}
+	
+	//fin
+	
 }
