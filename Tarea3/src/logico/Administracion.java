@@ -1,10 +1,15 @@
 package logico;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import com.sun.jndi.url.iiopname.iiopnameURLContextFactory;
 
-public class Administracion {
+public class Administracion implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<Cliente> todosLosClientes;
 	private ArrayList<Queso> todosLosQuesos;
 	private ArrayList<Factura> todasLasFacturas;
