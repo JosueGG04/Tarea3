@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -25,6 +26,7 @@ import logico.Hueco;
 import logico.Queso;
 import logico.Utilidades;
 import servidor.FormatoFactura;
+import servidor.Servidor;
 
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
@@ -288,6 +290,10 @@ public class RegFactura extends JDialog {
 								Administracion.getInstance().insertarQuesosEnFactura(auxFactura, quesosEnCarrito);
 								Administracion.getInstance().insertarFactura(auxFactura, auxCliente);
 								FormatoFactura.crearArchivo(auxFactura);
+								
+								
+								Principal.crearRespaldo(auxFactura.getCodigoFactura());
+								
 								JOptionPane.showMessageDialog(null,"La factura a sido registrada de manera exitosa" , "Registro exitoso", JOptionPane.INFORMATION_MESSAGE);
 								quesosVendidos();
 								buscado=false;

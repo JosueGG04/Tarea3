@@ -38,12 +38,10 @@ public class FormatoFactura {
 		try {
 			escritor = new FileWriter(archivo);
 			String info = creandoStringFactura(f);
-			// Escribe el archivo con la informacion
         for (int i=0; i<info.length(); i++)
             escritor.write(info.charAt(i));
         escritor.close();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

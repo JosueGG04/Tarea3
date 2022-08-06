@@ -16,27 +16,52 @@ import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.net.UnknownHostException;
 import java.awt.event.ActionEvent;
 
 public class Principal extends JFrame {
 
 	private JPanel contentPane;
 	private Dimension dim;
-
+	static Socket sfd = null;
+	static DataInputStream EntradaSocket;
+	static DataOutputStream SalidaSocket;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				try
+				{
+					sfd = new Socket("127.0.0.1",7001);
+					EntradaSocket = new DataInputStream(new BufferedInputStream(sfd.getInputStream()));
+					SalidaSocket = new DataOutputStream(new BufferedOutputStream(sfd.getOutputStream()));
+				}
+				catch (UnknownHostException uhe)
+				{
+					System.out.println("No se puede acceder al servidor.");
+					System.exit(1);
+				}
+				catch (IOException ioe)
+				{
+					System.out.println("Comunicación rechazada.");
+					System.exit(1);
+				}
 				Principal frame = new Principal();
 				frame.setVisible(true);
+				
 				
 				
 				FileInputStream queseria;
@@ -176,6 +201,17 @@ public class Principal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
+	}
+
+	public static void crearRespaldo(String codigoFactura) {
+		try {
+			SalidaSocket.writeUTF(codigoFactura);
+			SalidaSocket.flush();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }
